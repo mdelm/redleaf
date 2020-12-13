@@ -2,7 +2,7 @@ package com.redleaf.web;
 
 import com.redleaf.domain.Project;
 import com.redleaf.service.ProjectService;
-import com.redleaf.web.util.MapValidationErrors;
+import com.redleaf.web.errors.ValidationException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +23,8 @@ public class ProjectController {
     @PostMapping
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
         
-        ResponseEntity<?> response = MapValidationErrors.map(result);
-        if (response != null) return response;
+        if (result.hasErrors())
+            throw new ValidationException(result);
         
         Project newProject = projectService.save(project);
         return new ResponseEntity<>(newProject, HttpStatus.CREATED);
