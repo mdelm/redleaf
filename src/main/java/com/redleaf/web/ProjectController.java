@@ -37,5 +37,10 @@ public class ProjectController {
         Project project = projectService.findProjectByIdentifier(id.toUpperCase());
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
+    
+    @GetMapping
+    public ResponseEntity<?> getAllProjects() {
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
+    }
 
 }
