@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,15 +33,21 @@ public class ProjectController {
         return new ResponseEntity<>(newProject, HttpStatus.CREATED);
     }
     
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getProject(@PathVariable(name = "id") String id) {
-        Project project = projectService.findProjectByIdentifier(id.toUpperCase());
+    @GetMapping("/{projectId}")
+    public ResponseEntity<?> getProject(@PathVariable(name = "projectId") String projectId) {
+        Project project = projectService.findProjectByIdentifier(projectId.toUpperCase());
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
     
     @GetMapping
     public ResponseEntity<?> getAllProjects() {
         return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<?> deleteProject(@PathVariable(name = "projectId") String projectId) {
+        projectService.deleteProject(projectId);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }
