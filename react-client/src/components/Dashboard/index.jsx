@@ -6,6 +6,7 @@ class Dashboard extends Component {
 	render() {
 		return <div>
 			<Header />
+			<div className="alert alert-success">Alert</div>
 			<Project />
 			<Project />
 			<Project />
