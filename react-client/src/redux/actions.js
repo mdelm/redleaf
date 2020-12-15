@@ -1,0 +1,9 @@
+/* PROJECTS */
+export const CREATE_PROJECT_START = "CREATE_PROJECT_START";
+export const CREATE_PROJECT_SUCCESS = "CREATE_PROJECT_SUCCESS";
+export const CREATE_PROJECT_FAILURE = "CREATE_PROJECT_FAILURE";
+
+/* ERRORS */
+export const GET_ERRORS = "GET_ERRORS";
+
+export * from "./projects/actions";
