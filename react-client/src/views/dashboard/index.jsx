@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 import Project from "../../components/Project";
 import CreateProjectButton from "../../components/buttons/CreateProjectButton";
+import { connect } from "react-redux";
+import { fetchProjectsStart } from "../../redux/actions";
 
 class Dashboard extends Component {
+
+	componentDidMount() {
+		const { fetchProjectsStart } = this.props;
+		fetchProjectsStart();
+	}
+
 	render() {
+
+		const { allProjects } = this.props;
+
 		return <div className="projects">
 	        <div className="container">
 	            <div className="row">
@@ -16,8 +27,7 @@ class Dashboard extends Component {
 	                    <br />
 	                    <hr />
 
-	                    <Project />
-	                    <Project />
+	                    { allProjects.map(project => (<Project key={project.id} project={project} />)) }
 
 	                </div>
 	            </div>
@@ -26,4 +36,19 @@ class Dashboard extends Component {
 	}
 }
 
-export default Dashboard;
+const mapStateToProps = ({ projects }) => {
+	const { allProjects } = projects;
+
+	console.log(allProjects);
+
+	return { allProjects };
+};
+
+const mapDispatshToProps = disptach => ({
+	fetchProjectsStart: () => disptach(fetchProjectsStart())
+});
+
+export default connect(
+	mapStateToProps,
+	mapDispatshToProps
+)(Dashboard);
