@@ -1,6 +1,24 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { deleteProjectStart } from "../../redux/actions";
 
 class Project extends Component {
+
+    constructor() {
+        super();
+
+        this.onDeleteClick = this.onDeleteClick.bind(this);
+    }
+
+    onDeleteClick(e) {
+        e.preventDefault();
+
+        const { deleteProjectStart, project: { projectIdentifier } } = this.props;
+
+        deleteProjectStart(projectIdentifier);
+    }
+
 	render() {
 
         const { project } = this.props;
@@ -22,12 +40,12 @@ class Project extends Component {
                                     <i className="fa fa-flag-checkered pr-1">Project Board </i>
                                 </li>
                             </a>
-                            <a href="#">
+                            <Link to={`/updateProject/${project.projectIdentifier}`} >
                                 <li className="list-group-item update">
                                     <i className="fa fa-edit pr-1">Update Project Info</i>
                                 </li>
-                            </a>
-                            <a href="">
+                            </Link>
+                            <a href="" onClick={this.onDeleteClick} >
                                 <li className="list-group-item delete">
                                     <i className="fa fa-minus-circle pr-1">Delete Project</i>
                                 </li>
@@ -40,4 +58,11 @@ class Project extends Component {
 	}
 }
 
-export default Project;
+const mapDispatchToProps = dispatch => ({
+    deleteProjectStart: (projectId) => dispatch(deleteProjectStart(projectId))
+});
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(Project);

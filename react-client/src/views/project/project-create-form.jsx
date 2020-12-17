@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createProjectStart } from "../../redux/actions";
 import classnames from "classnames";
+import { Formik, Form, Field } from "formik";
 
-class ProjectForm extends Component {
+class ProjectCreateForm extends Component {
 
     constructor(props) {
         super(props);
@@ -121,4 +122,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ProjectForm);
+)(ProjectCreateForm);

@@ -1,6 +1,6 @@
 package com.redleaf.web.errors;
 
-public class ProjectNotFoundException extends RuntimeException {
+public class ProjectNotFoundException extends NotFoundException {
 
     public ProjectNotFoundException() {
     }

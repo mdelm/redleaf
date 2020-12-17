@@ -3,6 +3,7 @@ import Project from "../../components/Project";
 import CreateProjectButton from "../../components/buttons/CreateProjectButton";
 import { connect } from "react-redux";
 import { fetchProjectsStart } from "../../redux/actions";
+import PropTypes from "prop-types";
 
 class Dashboard extends Component {
 
@@ -36,10 +37,13 @@ class Dashboard extends Component {
 	}
 }
 
+Dashboard.propTypes = {
+	fetchProjectsStart: PropTypes.func.isRequired,
+	allProjects: PropTypes.array.isRequired
+}
+
 const mapStateToProps = ({ projects }) => {
 	const { allProjects } = projects;
-
-	console.log(allProjects);
 
 	return { allProjects };
 };

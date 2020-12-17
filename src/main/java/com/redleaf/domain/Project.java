@@ -1,12 +1,20 @@
 package com.redleaf.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
@@ -37,10 +45,20 @@ public class Project {
     private Date endDate;
     
     @JsonFormat(pattern = "yyyy-mm-dd")
+    @Column(updatable = false)
     private Date createdAt;
     
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedAt;
+    
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "backlog_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Backlog backlog;
+    
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Task> tasks = new HashSet<>();
 
     public Project() {
     }
@@ -107,6 +125,22 @@ public class Project {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
     
     @PrePersist

@@ -13,28 +13,27 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     
     @ExceptionHandler
-    public final ResponseEntity<ExceptionResponse> handleProjectNotFoundException(ProjectNotFoundException exc, WebRequest request) {
+    public final ResponseEntity<ExceptionResponse> handleNotFoundException(NotFoundException exc, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse();
         
         response.setStatus(HttpStatus.NOT_FOUND.value());
         response.setMessage(exc.getMessage());
-        response.setDetails(request.getDescription(false));
         response.setTimestamp(System.currentTimeMillis());
+        response.setDetails(request.getDescription(false));
         
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
     
     @ExceptionHandler
-    public final ResponseEntity<ValidationExceptionResponse> handleProjectIdentifierException(ProjectIdentifierException exc, WebRequest request) {
-        ValidationExceptionResponse response = new ValidationExceptionResponse();
+    public final ResponseEntity<ExceptionResponse> handleProjectIdentifierException(ProjectIdentifierException exc, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse();
         
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setStatus(HttpStatus.NOT_FOUND.value());
         response.setMessage(exc.getMessage());
-        response.setDetails(request.getDescription(false));
         response.setTimestamp(System.currentTimeMillis());
-        response.addError("projectIdentifier", exc.getMessage());
+        response.setDetails(request.getDescription(false));
         
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
     
     @ExceptionHandler
