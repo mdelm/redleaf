@@ -56,8 +56,8 @@ public class TaskService {
         
         task.setProject(project);
         task.setSequence(String.format("%s-%d", project.getProjectIdentifier(), taskSequence));
-        task.setPriority(3);
-        task.setStatus("TO_DO");
+        if (task.getPriority() == null) task.setPriority(3);
+        if (task.getStatus() == null) task.setStatus("TO_DO");
         
         return taskRepository.save(task);
     }

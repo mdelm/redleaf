@@ -35,19 +35,19 @@ class Project extends Component {
                     </div>
                     <div className="col-md-4 d-none d-lg-block">
                         <ul className="list-group">
-                            <a href="#">
+                            <Link to={`/dashboard/projectBoard/${project.projectIdentifier}`}>
                                 <li className="list-group-item board">
-                                    <i className="fa fa-flag-checkered pr-1">Project Board </i>
+                                    <i className="fa fa-flag-checkered pr-1 mr-2"></i>Project Board
                                 </li>
-                            </a>
-                            <Link to={`/updateProject/${project.projectIdentifier}`} >
+                            </Link>
+                            <Link to={`/dashboard/updateProject/${project.projectIdentifier}`} >
                                 <li className="list-group-item update">
-                                    <i className="fa fa-edit pr-1">Update Project Info</i>
+                                    <i className="fa fa-edit pr-1 mr-2"></i>Update Project Info
                                 </li>
                             </Link>
                             <a href="" onClick={this.onDeleteClick} >
                                 <li className="list-group-item delete">
-                                    <i className="fa fa-minus-circle pr-1">Delete Project</i>
+                                    <i className="fa fa-minus-circle pr-1 mr-2"></i>Delete Project
                                 </li>
                             </a>
                         </ul>

@@ -1,5 +1,6 @@
 package com.redleaf.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(updatable = false)
+    @Column(updatable = false, unique = true)
     private String sequence;
     
     @NotBlank(message = "Please include a project summary")
@@ -30,8 +31,15 @@ public class Task {
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
+    
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date dueDate;
+    
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    @Column(updatable = false)
     private Date createAt;
+    
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updateAt;
     
     @ManyToOne(fetch = FetchType.EAGER)

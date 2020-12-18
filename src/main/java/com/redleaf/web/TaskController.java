@@ -5,6 +5,8 @@ import com.redleaf.service.TaskService;
 import com.redleaf.web.errors.ValidationException;
 import java.util.List;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,8 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
     
+    private Logger logger = LoggerFactory.getLogger(TaskController.class);
+    
     @GetMapping
     public ResponseEntity<?> getTasksByProject(@PathVariable(name = "projectId") String projectId) {
         List<Task> tasks = taskService.getTasksByProject(projectId);
@@ -35,22 +39,22 @@ public class TaskController {
     }
     
     @PostMapping
-    public ResponseEntity<?> createTask(@PathVariable(name = "projectId") String projectId, @Valid @RequestBody Task task, BindingResult result) {
-        Task newTask = taskService.save(task, projectId);
+    public ResponseEntity<?> createTask(@Valid @RequestBody Task task, BindingResult result, @PathVariable(name = "projectId") String projectId) {
         
-        if (result.hasErrors())
+        if (result.hasErrors()) 
             throw new ValidationException(result);
         
+        Task newTask = taskService.save(task, projectId);
         return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
     
     @PutMapping
-    public ResponseEntity<?> updateTask(@PathVariable(name = "projectId") String projectId, @Valid @RequestBody Task task, BindingResult result) {
-        taskService.udpate(task, projectId);
+    public ResponseEntity<?> updateTask(@Valid @RequestBody Task task, BindingResult result, @PathVariable(name = "projectId") String projectId) {
         
         if (result.hasErrors())
             throw new ValidationException(result);
         
+        taskService.udpate(task, projectId);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
     

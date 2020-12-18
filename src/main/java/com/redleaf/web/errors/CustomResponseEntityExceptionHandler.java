@@ -28,12 +28,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public final ResponseEntity<ExceptionResponse> handleProjectIdentifierException(ProjectIdentifierException exc, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse();
         
-        response.setStatus(HttpStatus.NOT_FOUND.value());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setMessage(exc.getMessage());
         response.setTimestamp(System.currentTimeMillis());
         response.setDetails(request.getDescription(false));
         
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler
@@ -48,5 +48,17 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+    /*
+    @ExceptionHandler
+    public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception exc, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse();
+        
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setMessage(exc.getMessage());
+        response.setTimestamp(System.currentTimeMillis());
+        response.setDetails(request.getDescription(false));
+        
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }*/
 
 }
