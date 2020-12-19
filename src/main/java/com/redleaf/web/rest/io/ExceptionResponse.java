@@ -1,4 +1,4 @@
-package com.redleaf.web.errors;
+package com.redleaf.web.rest.io;
 
 public class ExceptionResponse {
     

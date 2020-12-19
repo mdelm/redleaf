@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
@@ -59,6 +60,10 @@ public class Project {
     @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     private Set<Task> tasks = new HashSet<>();
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     public Project() {
     }
@@ -141,6 +146,14 @@ public class Project {
 
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     
     @PrePersist

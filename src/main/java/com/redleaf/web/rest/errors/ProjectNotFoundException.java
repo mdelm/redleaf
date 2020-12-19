@@ -1,4 +1,6 @@
-package com.redleaf.web.errors;
+package com.redleaf.web.rest.errors;
+
+import com.redleaf.web.rest.errors.NotFoundException;
 
 public class ProjectNotFoundException extends NotFoundException {
 

@@ -1,5 +1,6 @@
-package com.redleaf.web.errors;
+package com.redleaf.web.rest.io;
 
+import com.redleaf.web.rest.io.ExceptionResponse;
 import java.util.HashMap;
 import java.util.Map;
 

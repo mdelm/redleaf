@@ -1,8 +1,8 @@
-package com.redleaf.web;
+package com.redleaf.web.rest;
 
 import com.redleaf.domain.Project;
 import com.redleaf.service.ProjectService;
-import com.redleaf.web.errors.ValidationException;
+import com.redleaf.web.rest.errors.ValidationException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/projects")
 @CrossOrigin
-public class ProjectController {
+public class ProjectResource {
     
     @Autowired
     private ProjectService projectService;

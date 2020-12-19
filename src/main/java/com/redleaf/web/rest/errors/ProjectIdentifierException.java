@@ -1,4 +1,4 @@
-package com.redleaf.web.errors;
+package com.redleaf.web.rest.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

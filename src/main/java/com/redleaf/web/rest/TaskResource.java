@@ -1,8 +1,8 @@
-package com.redleaf.web;
+package com.redleaf.web.rest;
 
 import com.redleaf.domain.Task;
 import com.redleaf.service.TaskService;
-import com.redleaf.web.errors.ValidationException;
+import com.redleaf.web.rest.errors.ValidationException;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/projects/{projectId}/tasks")
 @CrossOrigin
-public class TaskController {
+public class TaskResource {
     
     @Autowired
     private TaskService taskService;
     
-    private Logger logger = LoggerFactory.getLogger(TaskController.class);
+    private Logger logger = LoggerFactory.getLogger(TaskResource.class);
     
     @GetMapping
     public ResponseEntity<?> getTasksByProject(@PathVariable(name = "projectId") String projectId) {

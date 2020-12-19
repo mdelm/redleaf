@@ -3,8 +3,8 @@ package com.redleaf.service;
 import com.redleaf.domain.Backlog;
 import com.redleaf.domain.Project;
 import com.redleaf.repository.ProjectRepository;
-import com.redleaf.web.errors.ProjectIdentifierException;
-import com.redleaf.web.errors.ProjectNotFoundException;
+import com.redleaf.web.rest.errors.ProjectIdentifierException;
+import com.redleaf.web.rest.errors.ProjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

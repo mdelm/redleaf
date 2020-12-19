@@ -1,4 +1,4 @@
-package com.redleaf.web.errors;
+package com.redleaf.web.rest.errors;
 
 public class NotFoundException extends RuntimeException {
 

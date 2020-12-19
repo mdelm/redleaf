@@ -1,5 +1,9 @@
-package com.redleaf.web.errors;
+package com.redleaf.web.rest.errors;
 
+import com.redleaf.web.rest.io.ExceptionResponse;
+import com.redleaf.web.rest.io.ValidationExceptionResponse;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,13 +29,49 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
     
     @ExceptionHandler
-    public final ResponseEntity<ExceptionResponse> handleProjectIdentifierException(ProjectIdentifierException exc, WebRequest request) {
-        ExceptionResponse response = new ExceptionResponse();
+    public final ResponseEntity<ValidationExceptionResponse> handleAuthenticationException(AuthenticationException exc, WebRequest request) {
+        ValidationExceptionResponse response = new ValidationExceptionResponse();
+        Map<String, String> errors = new HashMap<>();
+        
+        errors.put("bad credentials", exc.getMessage());
         
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setMessage(exc.getMessage());
-        response.setTimestamp(System.currentTimeMillis());
         response.setDetails(request.getDescription(false));
+        response.setTimestamp(System.currentTimeMillis());
+        response.setErrors(errors);
+        
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler
+    public final ResponseEntity<ValidationExceptionResponse> handleProjectIdentifierException(ProjectIdentifierException exc, WebRequest request) {
+        ValidationExceptionResponse response = new ValidationExceptionResponse();
+        Map<String, String> errors = new HashMap<>();
+        
+        errors.put("projectIdentifier", exc.getMessage());
+        
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setMessage(exc.getMessage());
+        response.setDetails(request.getDescription(false));
+        response.setTimestamp(System.currentTimeMillis());
+        response.setErrors(errors);
+        
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler
+    public final ResponseEntity<ValidationExceptionResponse> handleUniqueEmailException(UniqueEmailException exc, WebRequest request) {
+        ValidationExceptionResponse response = new ValidationExceptionResponse();
+        Map<String, String> errors = new HashMap<>();
+        
+        errors.put("email", exc.getMessage());
+        
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setMessage(exc.getMessage());
+        response.setDetails(request.getDescription(false));
+        response.setTimestamp(System.currentTimeMillis());
+        response.setErrors(errors);
         
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
