@@ -144,5 +144,22 @@ public class Task {
     public String toString() {
         return "Task{" + "id=" + id + ", sequence=" + sequence + ", summary=" + summary + ", acceptanceCriteria=" + acceptanceCriteria + ", status=" + status + ", priority=" + priority + ", dueDate=" + dueDate + ", createAt=" + createAt + ", updateAt=" + updateAt + ", project=" + project + '}';
     }
+    
+    public void clone(Task other) {
+        if ( other.getSummary() != null && !this.summary.equals(other.getSummary()) )
+            this.summary = other.getSummary();
+                    
+        if ( other.getAcceptanceCriteria() != null && !this.acceptanceCriteria.equals(other.getAcceptanceCriteria()) )
+            this.acceptanceCriteria = other.getAcceptanceCriteria();
+        
+        if ( other.getDueDate() != null && !this.dueDate.equals(other.getDueDate()) )
+            this.dueDate = other.getDueDate();
+        
+        if ( other.getPriority() != null && !this.priority.equals(other.getPriority()) )
+            this.priority = other.getPriority();
+        
+        if ( other.getStatus() != null && !this.status.equals(other.getStatus()) )
+            this.status = other.getStatus();
+    }
 
 }

@@ -29,8 +29,6 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
         
-        logger.info(user.toString());
-        
         if (user == null)
             throw new UserNotFoundException(String.format("The email '%s' does not exists.", email));
 
@@ -42,7 +40,6 @@ public class UserService implements UserDetailsService {
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userRepository.save(newUser);
         } catch (RuntimeException exc) {
-            // exc.printStackTrace();
             throw new UniqueEmailException(String.format("Email address '%s' already exists.", newUser.getEmail()));
         }
     }

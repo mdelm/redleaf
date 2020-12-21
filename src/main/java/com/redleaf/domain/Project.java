@@ -63,6 +63,7 @@ public class Project {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
     public Project() {
@@ -154,6 +155,20 @@ public class Project {
 
     public void setUser(User user) {
         this.user = user;
+    }
+    
+    public void clone(Project other) {
+        if ( other.getProjectName() != null && !this.projectName.equals(other.getProjectName()) )
+            this.projectName = other.getProjectName();
+        
+        if ( other.getDescription() != null && !this.description.equals(other.getDescription()) )
+            this.description = other.getDescription();
+        
+        if ( other.getStartDate() != null && !this.startDate.equals(other.getStartDate()) )
+            this.startDate = other.getStartDate();
+        
+        if ( other.getEndDate() != null && !this.endDate.equals(other.getEndDate()) )
+            this.endDate = other.getEndDate();
     }
     
     @PrePersist

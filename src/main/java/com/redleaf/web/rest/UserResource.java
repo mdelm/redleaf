@@ -1,12 +1,13 @@
 package com.redleaf.web.rest;
 
 import com.redleaf.domain.User;
+import static com.redleaf.security.SecurityConstants.TOKEN_PREFIX;
 import com.redleaf.security.jwt.TokenProvider;
 import com.redleaf.service.UserService;
 import com.redleaf.web.rest.errors.AuthenticationException;
 import com.redleaf.web.rest.errors.ValidationException;
-import com.redleaf.web.rest.io.AuthenticationRequest;
-import com.redleaf.web.rest.io.AuthenticationResponse;
+import com.redleaf.web.rest.io.JwtAuthenticationRequest;
+import com.redleaf.web.rest.io.JwtAuthenticationResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class UserResource {
     private PasswordEncoder passwordEncoder;*/
     
     @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
@@ -50,10 +51,10 @@ public class UserResource {
         final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
         final String jwt = tokenProvider.generateToken(userDetails);
         
-        return ResponseEntity.ok(new AuthenticationResponse((jwt)));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(TOKEN_PREFIX + " " + jwt));
     }
     
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody User user, BindingResult result) {
         
         if (result.hasErrors())

@@ -1,13 +1,13 @@
 package com.redleaf.web.rest.io;
 
-public class AuthenticationResponse {
+public class JwtAuthenticationResponse {
     
     private String jwt;
 
-    public AuthenticationResponse() {
+    public JwtAuthenticationResponse() {
     }
 
-    public AuthenticationResponse(String jwt) {
+    public JwtAuthenticationResponse(String jwt) {
         this.jwt = jwt;
     }
 

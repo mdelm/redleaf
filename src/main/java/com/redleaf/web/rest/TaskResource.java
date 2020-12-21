@@ -3,6 +3,7 @@ package com.redleaf.web.rest;
 import com.redleaf.domain.Task;
 import com.redleaf.service.TaskService;
 import com.redleaf.web.rest.errors.ValidationException;
+import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -32,42 +33,42 @@ public class TaskResource {
     private Logger logger = LoggerFactory.getLogger(TaskResource.class);
     
     @GetMapping
-    public ResponseEntity<?> getTasksByProject(@PathVariable(name = "projectId") String projectId) {
-        List<Task> tasks = taskService.getTasksByProject(projectId);
+    public ResponseEntity<?> getTasksByProject(@PathVariable(name = "projectId") String projectId, Principal principal) {
+        List<Task> tasks = taskService.getTasksByProject(projectId, principal.getName());
         
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
     
     @PostMapping
-    public ResponseEntity<?> createTask(@Valid @RequestBody Task task, BindingResult result, @PathVariable(name = "projectId") String projectId) {
+    public ResponseEntity<?> createTask(@Valid @RequestBody Task task, BindingResult result, @PathVariable(name = "projectId") String projectId, Principal principal) {
         
         if (result.hasErrors()) 
             throw new ValidationException(result);
         
-        Task newTask = taskService.save(task, projectId);
+        Task newTask = taskService.save(task, projectId, principal.getName());
         return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
     
     @PutMapping
-    public ResponseEntity<?> updateTask(@Valid @RequestBody Task task, BindingResult result, @PathVariable(name = "projectId") String projectId) {
+    public ResponseEntity<?> updateTask(@Valid @RequestBody Task task, BindingResult result, @PathVariable(name = "projectId") String projectId, Principal principal) {
         
         if (result.hasErrors())
             throw new ValidationException(result);
         
-        taskService.udpate(task, projectId);
+        taskService.udpate(task, projectId, principal.getName());
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
     
     @DeleteMapping("/{sequence}")
-    public ResponseEntity<?> deleteTask(@PathVariable(name = "sequence") String sequence, @PathVariable(name = "projectId") String projectId) {
-        taskService.deleteTask(sequence, projectId);
+    public ResponseEntity<?> deleteTask(@PathVariable(name = "sequence") String sequence, @PathVariable(name = "projectId") String projectId, Principal principal) {
+        taskService.deleteTask(sequence, projectId, principal.getName());
         
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
     
     @GetMapping("/{sequence}")
-    public ResponseEntity<?> getTask(@PathVariable(name = "sequence") String sequence, @PathVariable(name = "projectId") String projectId) {
-        Task task = taskService.getOne(sequence, projectId);
+    public ResponseEntity<?> getTask(@PathVariable(name = "sequence") String sequence, @PathVariable(name = "projectId") String projectId, Principal principal) {
+        Task task = taskService.getOne(sequence, projectId, principal.getName());
         
         return new ResponseEntity<>(task, HttpStatus.OK);
     }

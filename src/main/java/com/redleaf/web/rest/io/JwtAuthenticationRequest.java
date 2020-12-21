@@ -1,14 +1,14 @@
 package com.redleaf.web.rest.io;
 
-public class AuthenticationRequest {
+public class JwtAuthenticationRequest {
     
     private String username;
     private String password;
 
-    public AuthenticationRequest() {
+    public JwtAuthenticationRequest() {
     }
 
-    public AuthenticationRequest(String username, String password) {
+    public JwtAuthenticationRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }

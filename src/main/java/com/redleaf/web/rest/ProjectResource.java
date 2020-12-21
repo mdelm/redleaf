@@ -3,6 +3,7 @@ package com.redleaf.web.rest;
 import com.redleaf.domain.Project;
 import com.redleaf.service.ProjectService;
 import com.redleaf.web.rest.errors.ValidationException;
+import java.security.Principal;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,39 +28,39 @@ public class ProjectResource {
     private ProjectService projectService;
     
     @PostMapping
-    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
+    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result, Principal principal) {
         
         if (result.hasErrors())
             throw new ValidationException(result);
         
-        Project newProject = projectService.save(project);
+        Project newProject = projectService.save(project, principal.getName());
         return new ResponseEntity<>(newProject, HttpStatus.CREATED);
     }
     
     @GetMapping("/{projectId}")
-    public ResponseEntity<?> getProject(@PathVariable(name = "projectId") String projectId) {
-        Project project = projectService.findProjectByIdentifier(projectId.toUpperCase());
+    public ResponseEntity<?> getProject(@PathVariable(name = "projectId") String projectId, Principal principal) {
+        Project project = projectService.findProjectByIdentifier(projectId.toUpperCase(), principal.getName());
         return new ResponseEntity<>(project, HttpStatus.OK);
     }
     
     @GetMapping
-    public ResponseEntity<?> getAllProjects() {
-        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
+    public ResponseEntity<?> getAllProjects(Principal principal) {
+        return new ResponseEntity<>(projectService.getAllProjects(principal.getName()), HttpStatus.OK);
     }
     
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<?> deleteProject(@PathVariable(name = "projectId") String projectId) {
-        projectService.deleteProject(projectId);
+    public ResponseEntity<?> deleteProject(@PathVariable(name = "projectId") String projectId, Principal principal) {
+        projectService.deleteProject(projectId, principal.getName());
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
     
     @PutMapping
-    public ResponseEntity<?> updateProject(@Valid @RequestBody Project project, BindingResult result) {
+    public ResponseEntity<?> updateProject(@Valid @RequestBody Project project, BindingResult result, Principal principal) {
         
         if (result.hasErrors())
             throw new ValidationException(result);
         
-        projectService.update(project);
+        projectService.update(project, principal.getName());
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
