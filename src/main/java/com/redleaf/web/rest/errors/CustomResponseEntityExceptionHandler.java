@@ -33,7 +33,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         ValidationExceptionResponse response = new ValidationExceptionResponse();
         Map<String, String> errors = new HashMap<>();
         
-        errors.put("bad credentials", exc.getMessage());
+        errors.put("badCredentials", exc.getMessage());
         
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setMessage(exc.getMessage());

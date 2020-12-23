@@ -1,24 +1,29 @@
 package com.redleaf.web.rest.io;
 
+import javax.validation.constraints.NotBlank;
+
 public class JwtAuthenticationRequest {
     
-    private String username;
+    @NotBlank(message = "Please type your email address")
+    private String email;
+    
+    @NotBlank(message = "Please enter your password")
     private String password;
 
     public JwtAuthenticationRequest() {
     }
 
-    public JwtAuthenticationRequest(String username, String password) {
-        this.username = username;
+    public JwtAuthenticationRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

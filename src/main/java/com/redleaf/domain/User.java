@@ -31,7 +31,7 @@ public class User {
     private String firstName;
     
     @NotBlank(message = "Last name is required")
-    private String LastName;
+    private String lastName;
     
     @NotBlank(message = "Email is required")
     @Email
@@ -73,11 +73,11 @@ public class User {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -132,7 +132,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", firstName=" + firstName + ", LastName=" + LastName + ", email=" + email + ", password=" + password + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", projects=" + projects + '}';
+        return "User{" + "id=" + id + ", firstName=" + firstName + ", LastName=" + lastName + ", email=" + email + ", password=" + password + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", projects=" + projects + '}';
     }
 
     @Override

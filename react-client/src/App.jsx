@@ -16,6 +16,9 @@ const ViewTaskCreateForm = React.lazy(() => import("./views/app/task/task-create
 const ViewTaskUpdateForm = React.lazy(() => import("./views/app/task/task-update-form"));
 const ViewError = React.lazy(() => import("./views/error"));
 
+const ViewLogin = React.lazy(() => import("./views/user/login"));
+const ViewRegister = React.lazy(() => import("./views/user/register"));
+
 class App extends Component {
 	render() {
 		return (
@@ -55,6 +58,16 @@ class App extends Component {
 								render={props => (<ViewDashboard {...props} />)}
 							/>
 							<Route 
+								path="/login"
+								exact
+								render={props => (<ViewLogin {...props} />)}
+							/>
+							<Route 
+								path="/register"
+								exact
+								render={props => (<ViewRegister {...props} />)}
+							/>
+							<Route 
 								path="/error"
 								exact
 								render={props => (<ViewError {...props} />)}
@@ -74,26 +87,3 @@ class App extends Component {
 }
 
 export default App;
-
-/*import './App.css';
-import Dashboard from "./views/dashboard";
-import ProjectCreateForm from "./views/project/project-create-form";
-import ProjectUpdateFrom from "./views/project/project-update-form";
-import Navbar from "./components/Navbar";
-import "./assets/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-
-function App() {
-  return (
-  	<Router>
-	    <div className="App">
-	    	<Navbar />
-	      	<Route exact path="/dashboard" component={Dashboard} />
-	      	<Route exact path="/addProject" component={ProjectCreateForm} />
-	      	<Route exact path="/updateProject/:projectId" component={ProjectUpdateFrom} />
- 	    </div>
-    </Router>
-  );
-}
-
-export default App;*/

@@ -34,7 +34,28 @@ function* createProjectStartAsync({ payload : { project, history } }) {
 
 function* fetchProjectsStartAsync() {
 	try {
-		const projects = yield axios.get("http://localhost:8080/api/projects").then(response => response.data);
+		/*axios.defaults.headers.get["Authorization"] = localStorage.getItem("jwt");
+		console.log(axios.defaults.headers);
+		const projects = yield axios.get("http://localhost:8080/api/projects", ).then(response => response.data);*/
+
+
+		/*
+		
+		var instance = axios.create({
+  baseURL: 'https://some-domain.com/api/',
+  timeout: 1000,
+  headers: {'X-Custom-Header': 'foobar'}
+});
+		*/
+
+		var instance = axios.create({
+			baseURL: "http://localhost:8080/api/",
+			headers: {"Authorization": localStorage.getItem("jwt")}
+		});
+
+		const projects = yield instance.get("/projects").then(response => response.data);
+
+
 		yield put(fetchProjectsSuccess(projects));
 	} catch (error) {
 		const { errors } = error.response.data;

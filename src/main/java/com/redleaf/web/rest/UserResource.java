@@ -17,6 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin
 public class UserResource {
     
     @Autowired
@@ -39,19 +41,23 @@ public class UserResource {
     private PasswordEncoder passwordEncoder;*/
     
     @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody JwtAuthenticationRequest authenticationRequest, BindingResult result) throws Exception {
+        
+        if (result.hasErrors())
+            throw new ValidationException(result);
+        
         try {
             authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
             );
         } catch (BadCredentialsException exc) {
             throw new AuthenticationException("Incorrect username or password");
         }
         
-        final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getEmail());
         final String jwt = tokenProvider.generateToken(userDetails);
         
-        return ResponseEntity.ok(new JwtAuthenticationResponse(TOKEN_PREFIX + " " + jwt));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(TOKEN_PREFIX + " " + jwt, ""));
     }
     
     @PostMapping("/register")

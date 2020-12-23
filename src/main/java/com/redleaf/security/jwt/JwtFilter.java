@@ -35,6 +35,8 @@ public class JwtFilter extends OncePerRequestFilter {
         
         final String requestTokenHeader = request.getHeader(HEADER_STRING);
         
+        logger.info(requestTokenHeader);
+        
         String username = null;
         String jwt = null;
         
