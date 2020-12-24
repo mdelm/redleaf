@@ -1,0 +1,1 @@
+export const servicePath = "http://localhost:8080";
