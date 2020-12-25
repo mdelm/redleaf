@@ -108,9 +108,10 @@ class TaskCreateFrom extends Component {
                       value={this.state.status}
                     >
                       <option value="">Select Status</option>
-                      <option value="TO_DO">TO DO</option>
-                      <option value="IN_PROGRESS">IN PROGRESS</option>
-                      <option value="DONE">DONE</option>
+                      <option value="IDEAS">Ideas</option>
+                      <option value="TO_DO">To Do</option>
+                      <option value="IN_PROGRESS">In Progress</option>
+                      <option value="DONE">Done</option>
                     </select>
                   </div>
 

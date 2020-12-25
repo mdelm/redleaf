@@ -139,7 +139,7 @@ function* deleteTask({ payload: {sequence, projectId} }) {
 		let resp = yield call(deleteTaskAsync, sequence, projectId);
 		if (resp) {
 			if (resp.message) {
-				yield put(deleteTaskSuccess(resp.message));
+				yield put(deleteTaskSuccess(sequence));
 			}
 			if (resp.errors) {
 				yield put(deleteTaskFailure(resp.errors));

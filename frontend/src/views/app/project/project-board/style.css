@@ -1,0 +1,9 @@
+.card-deck {
+    background-color: darkcyan;
+    height: 100vh;
+}
+
+.cards-container {
+    background-color: ghostwhite;
+    height: min-content;
+}

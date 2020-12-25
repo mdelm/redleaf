@@ -8,7 +8,7 @@ import {
 	Redirect
 } from "react-router-dom";
 import AuthRoute from "./components/AuthRoute";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 
 const ViewMain = React.lazy(() => import("./views"));
 const ViewApp = React.lazy(() => import("./views/app"));
@@ -26,7 +26,7 @@ const App = ({ setCurrentUserStart, authUser }) => {
 		<React.Fragment>
 			<Suspense fallback={<div className="loading" />}>
 				<Router>
-					<Navbar />
+					<Header />
 					<Switch>
 						<AuthRoute
 							path="/dashboard"

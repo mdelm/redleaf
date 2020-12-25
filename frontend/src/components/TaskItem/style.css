@@ -1,0 +1,37 @@
+.task-item {
+    position: relative;
+}
+
+.task-item .task-id {
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    right: 6px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: brown;
+}
+
+.task-item .task-id::before {
+    content: '#';
+}
+
+.task-item .priority-descriptor {
+    width: 60px;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+
+.task-item .high-priority {
+    background-color: darkred;
+}
+
+.task-item .medium-priority {
+    background-color: darkorange;
+}
+
+.task-item .low-priority {
+    background-color: darkseagreen;
+}
